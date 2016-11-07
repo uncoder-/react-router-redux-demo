@@ -8,9 +8,9 @@ const initIndexData = {
 function indexReducer(state = initIndexData, action) {
 	switch (action.type) {
 		case CHANGE_NAME:
-			return action.text
+			return { ...state, ...{name:action.text}}
 		case CHANGE_AGE:
-			return action.age
+			return { ...state, ...{age:action.age}}
 		default:
 			return state
 	}

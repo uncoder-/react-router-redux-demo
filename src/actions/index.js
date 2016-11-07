@@ -10,6 +10,6 @@ export const SHOW_PAGE = 'SHOW_PAGE'
 export function changeName(text) {
   return { type: CHANGE_NAME, text }
 }
-export function changeAge(num) {
-  return { type: CHANGE_AGE, num }
+export function changeAge(age) {
+  return { type: CHANGE_AGE, age }
 }

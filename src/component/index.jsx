@@ -50,7 +50,7 @@ class Index extends React.Component {
 }
 
 export default connect(state => {
-	console.log(state);
+	//console.log(state)
 	return ({
 		name: state.indexReducer.name,
 		age: state.indexReducer.age
