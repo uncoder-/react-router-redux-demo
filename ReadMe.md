@@ -25,3 +25,5 @@ component
 
 
 dispatch本身不会做页面渲染，它改变的是store里存储的数据
+
+由数据改变，联动到react上，然后react开始改变UI。
