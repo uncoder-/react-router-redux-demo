@@ -51,8 +51,11 @@ class Index extends React.Component {
 		return <div onClick={this.setNewData}>
 			hello {name}! 我{age}岁了！
 			<br/>
-			<div onClick={this.alertName}>click me!</div>	
-			<div onClick = {(e) => this.alertName(e)}>click me2!</div>	
+			<div onClick={this.alertName}>click me!(在constructor里注册绑定)</div>
+			<br/>	
+			<div onClick = {(e) => this.alertName(e)}>click me2!（使用匿名函数）</div>
+			<br/>
+			<div onClick={::alertName}>click me3!（使用es7方式）</div>		
 		</div>
 	}
 }
