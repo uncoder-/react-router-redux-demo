@@ -10,6 +10,8 @@ class Index extends React.Component {
 	}
 	constructor(props) {
 		super(...props);
+		// 注册
+		this.handleClick = this.handleClick.bind(this);
 	}
 	componentWillMount() {
 		console.log('1');
@@ -39,6 +41,9 @@ class Index extends React.Component {
 		dispatch(changeName('小强'));
 		dispatch(changeAge(25));
 	}
+	alertName(){
+		alert('name');
+	}
 	render() {
 		console.log('2');
 		let name = this.props.name;
@@ -46,7 +51,8 @@ class Index extends React.Component {
 		return <div onClick={this.setNewData}>
 			hello {name}! 我{age}岁了！
 			<br/>
-			<div onClick={this.}>click me!</div>	
+			<div onClick={this.alertName}>click me!</div>	
+			<div onClick = {(e) => this.alertName(e)}>click me2!</div>	
 		</div>
 	}
 }
