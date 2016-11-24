@@ -22,3 +22,6 @@ redux
 
 component
 接收redux的数据，渲染页面，或者触发redux的action
+
+
+dispatch本身不会做页面渲染，它改变的是store里存储的数据
