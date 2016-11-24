@@ -45,6 +45,8 @@ class Index extends React.Component {
 		let age = this.props.age;
 		return <div onClick={this.setNewData}>
 			hello {name}! 我{age}岁了！
+			<br/>
+			<div onClick={this.}>click me!</div>	
 		</div>
 	}
 }
