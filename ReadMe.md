@@ -27,3 +27,21 @@ component
 dispatch本身不会做页面渲染，它改变的是store里存储的数据
 
 由数据改变，联动到react上，然后react开始改变UI。
+
+
+
+
+
+# 更新
+```
+@connect(({reducer名字})=>({reducer新名字:reducer名字}))
+class Com externs Component{
+    componentDidMount(){
+	    this.$dispatch(新action数据,'action的名字');
+	}
+    render(){
+        // 接收的新的state
+        console.log(reducer新名字);
+    }
+}
+```

@@ -6,8 +6,9 @@ import Section from '../component/section.jsx';
 
 let router = (
 		<Router history={browserHistory} >
-			<Route path='/' component={Index} />
-			<Route path='/section' component={Section} />
+			<Route path='/' component={Index} >
+				<Route path='/section' component={Section} />
+			</Route>
 		</Router>
 	)
 export default router;

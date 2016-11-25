@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-
+import {Link} from 'react-router';
 import { changeName, changeAge } from '../actions';
 
 class Index extends React.Component {
@@ -11,7 +11,7 @@ class Index extends React.Component {
 	constructor(props) {
 		super(...props);
 		// 注册
-		this.handleClick = this.handleClick.bind(this);
+		this.handleClick = this.alertName.bind(this);
 	}
 	componentWillMount() {
 		console.log('1');
@@ -48,15 +48,17 @@ class Index extends React.Component {
 		console.log('2');
 		let name = this.props.name;
 		let age = this.props.age;
-		return <div onClick={this.setNewData}>
+		let {children} = this.props;
+		return (<div onClick={this.setNewData}>
 			hello {name}! 我{age}岁了！
 			<br/>
 			<div onClick={this.alertName}>click me!(在constructor里注册绑定)</div>
 			<br/>	
 			<div onClick = {(e) => this.alertName(e)}>click me2!（使用匿名函数）</div>
-			<br/>
-			<div onClick={::alertName}>click me3!（使用es7方式）</div>		
-		</div>
+			<br/>		
+			<Link to='/section' >go section page</Link>
+			{children}
+		</div>)
 	}
 }
 
