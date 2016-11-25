@@ -41,7 +41,7 @@ class Com externs Component{
 	}
     render(){
         // 接收的新的state
-        console.log(reducer新名字);
+        console.log(this.propos.reducer新名字);
     }
 }
 ```
