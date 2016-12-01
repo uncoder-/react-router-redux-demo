@@ -1,11 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import PDF from './PDF.jsx'
 class Section extends React.Component{
 	constructor(props){
 		super(props);
 	}
 	render(){
-		let page = this.props.page;
-		return (<div>section page!</div>)
+		return (<div>
+		section page!
+		<PDF src='http://localhost:8080/test09.pdf' />
+		</div>)
 	}
 }
 

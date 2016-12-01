@@ -30,6 +30,7 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "babel-runtime": "^6.18.0",
+    "pdfjs-dist": "^1.6.359",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^1.0.0"
