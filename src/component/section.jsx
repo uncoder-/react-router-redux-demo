@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { showPage } from '../actions'
 class Section extends React.Component{
 	constructor(props){
 		super(props);
@@ -11,8 +9,4 @@ class Section extends React.Component{
 	}
 }
 
-export default connect(state =>{
-	return state.sectionReducer
-},dispatch =>{
-	return {dispatch}
-})(Section)
+export default Section
