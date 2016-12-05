@@ -6,7 +6,17 @@ import Section from '../component/section.jsx';
 
 let router = (
 		<Router history={hashHistory} >
-			<Route path='/' component={Index} >
+			<Route path='/' component={Index} 
+				onEnter={
+					(history, replace) => {
+						if(true){
+							// 不用登陆
+						}else{
+							replace('/login');
+						}
+					}
+				}
+			>
 				<IndexRedirect to="section" />
 				<Route path='section' component={Section} />
 			</Route>
