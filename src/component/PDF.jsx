@@ -29,7 +29,6 @@ class PDF extends React.Component{
 	componentDidMount(){
 		const pdfurl = this.props['src'];
 		PDFJS.getDocument(pdfurl).then((pdf) =>{
-			console.log(pdf);
 			this.setState({
 				fileData:pdf,
 				page:1,
