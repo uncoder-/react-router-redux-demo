@@ -27,6 +27,12 @@ module.exports = {
 				loader: 'url-loader?limit=10192'
 			},
 			{
+				test: /\.(eot|ttf|svg)/,loader : 'file?prefix=font/'
+			},
+			{
+				test: /\.woff/,loader : 'file?prefix=font/&limit=10000&mimetype=application/font-woff'
+			},
+			{
 				test: /\.(js|jsx)$/,
 				loader: 'babel',
 				query: {

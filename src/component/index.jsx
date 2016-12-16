@@ -14,26 +14,26 @@ class Index extends React.Component {
 		this.handleClick = this.alertName.bind(this);
 	}
 	componentWillMount() {
-		console.log('1');
+		//console.log('1');
 	}
 	componentDidMount() {
-		console.log('3');
+		//console.log('3');
 	}
 	componentWillReceiveProps() {
-		console.log('4')
+		//console.log('4')
 	}
 	shouldComponentUpdate() {
-		console.log('5')
+		//console.log('5')
 		return true;
 	}
 	componentWillUpdate() {
-		console.log('6');
+		//console.log('6');
 	}
 	componentDidUpdate() {
-		console.log('7');
+		//console.log('7');
 	}
 	componentWillUnmount() {
-		console.log('8');
+		//console.log('8');
 	}
 	// 自定义方法
 	setNewData = e => {
@@ -45,11 +45,11 @@ class Index extends React.Component {
 		alert('name');
 	}
 	render() {
-		console.log('2');
+		//console.log('2');
 		let name = this.props.name;
 		let age = this.props.age;
 		let {children} = this.props;
-		console.log(this.props)
+		//console.log(this.props)
 		return (<div onClick={this.setNewData}>
 			hello {name}! 我{age}岁了！
 			<br/>
