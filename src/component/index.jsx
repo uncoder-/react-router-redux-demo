@@ -36,7 +36,7 @@ class Index extends React.Component {
 		//console.log('8');
 	}
 	// 自定义方法
-	setNewData = e => {
+	setNewData = (e) => {
 		const { dispatch, changeName } = this.props;
 		dispatch(changeName('小强'));
 		dispatch(changeAge(25));
@@ -44,18 +44,25 @@ class Index extends React.Component {
 	alertName(){
 		alert('name');
 	}
+	alertName2(){
+		console.log(this);
+		alert('name2');
+	}
 	render() {
 		//console.log('2');
 		let name = this.props.name;
 		let age = this.props.age;
 		let {children} = this.props;
 		//console.log(this.props)
-		return (<div onClick={this.setNewData}>
+		return (<div>
 			hello {name}! 我{age}岁了！
+			<div onClick={this.setNewData}>设置新值</div>
 			<br/>
-			<div onClick={this.alertName}>click me!(在constructor里注册绑定)</div>
+			<div onClick={this.alertName}>点击我</div>
+			<br/>
+			<div onClick={this.alertName2}>click me!(在constructor里注册绑定)</div>
 			<br/>	
-			<div onClick = {(e) => this.alertName(e)}>click me2!（使用匿名函数）</div>
+			<div onClick = {(e) => this.alertName(e)}>点击我2（使用匿名函数）</div>
 			<br/>		
 			<Link to='/section' >go section page</Link>
 			{children}
