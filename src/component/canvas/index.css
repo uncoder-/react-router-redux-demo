@@ -1,0 +1,12 @@
+.draw-canvas canvas{
+    border: 1px solid red;
+}
+.control-panel{
+   user-select: none;
+}
+.control-panel .active{
+    color: red;
+}
+.pre-load{
+    display: none;
+}
