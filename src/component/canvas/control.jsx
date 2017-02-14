@@ -14,7 +14,7 @@ class ControlPanel extends React.Component {
                 {actionName:'drawText',text:'写字',activeStatus:0}
             ],
             specalButtons:[
-                {actionName:'clear',text:'清空'},
+                {actionName:'reset',text:'清空'},
                 {actionName:'revoke',text:'撤销'}
             ]
         }

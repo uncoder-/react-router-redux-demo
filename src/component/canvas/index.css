@@ -1,12 +1,48 @@
-.draw-canvas canvas{
+.canvas-container{
+
+}
+.draw-canvas{
+    position: relative;
+    width: 650px;
+    height: 700px;
+    overflow: scroll;
     border: 1px solid red;
 }
+.draw-canvas canvas{
+    max-width: 100%;
+}
 .control-panel{
-   user-select: none;
+    list-style: none;
+    user-select: none;
+}
+.control-panel li{
+    float: left;
+    margin-left: 15px;
+    padding: 5px;
 }
 .control-panel .active{
     color: red;
 }
 .pre-load{
     display: none;
+}
+.pre-input{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 2px solid gray;
+    box-shadow: 2px 2px 2px #666;
+    cursor: default;
+    padding: 2px;
+    background-color: #f1f1f1;
+}
+.pre-input input{
+    display: inline-block;
+    border: 1px solid #0cf;
+}
+.pre-input div{
+    display: inline-block;
+    font-size: 15px;
+    color: white;
+    background: red;
 }

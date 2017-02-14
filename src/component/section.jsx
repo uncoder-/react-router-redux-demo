@@ -26,7 +26,7 @@ class Section extends React.Component{
 			{/*canvas编辑*/}
 			<div>
 				{/*渲染组件*/}
-				<CanvasView url={require('./canvas/img/qrcode.png')}/>
+				<CanvasView url={require('./canvas/img/homework.png')}/>
 				{/*控制组件*/}
 				
 			</div>

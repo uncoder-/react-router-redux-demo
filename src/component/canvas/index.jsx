@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import RenderView from './render.jsx';
 import ControlPanel from './control.jsx';
+import Style from './index.css';
 class CanvasView extends React.Component {
     constructor(props) {
         super(props);
@@ -17,10 +18,9 @@ class CanvasView extends React.Component {
     }
     checkStatus(args) { 
         // console.log(args); 
-        let {actionName, status} = args;
         this.setState({
-            actionName: actionName,
-            drawStatus: status
+            actionName: args.actionName,
+            drawStatus: args.status
         })
     }
     finishDraw(args){
@@ -32,8 +32,8 @@ class CanvasView extends React.Component {
     render() {
         // console.log(this.state)
         return (
-            <div>
-                <RenderView 
+            <div className="canvas-container">
+                <RenderView
                     url = {this.state.url}
                     actionName = {this.state.actionName}
                     drawStatus = {this.state.drawStatus == 0?false:true}
