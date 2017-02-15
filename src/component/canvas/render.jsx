@@ -21,15 +21,24 @@ class RenderView extends React.Component{
                 height: 0,
                 width: 0
             },
-            canvasUrl:''
+            myCanvas:'',
+            myCtx:'',
+            canvasConfig:{
+                fillStyle: "red",
+                font: "60px ooxx",
+                strokeStyle: "red",
+                lineWidth: 5
+            },
+            canvasUrl: '',
+            historyList: []
         };
         this.state = {
              inputStatus: false,
              inputPosition:{
-                 left:0,
-                 top:0,
-                 x:0,
-                 y:0
+                 left: 0,
+                 top: 0,
+                 x: 0,
+                 y: 0
              }
         }
 	}
@@ -71,7 +80,7 @@ class RenderView extends React.Component{
     }
     onmouseup(e){
         if(this.init.click && this.init.actionName == "drawRect"){
-            this.drawRect();
+            this.drawRect(true);
             // 保存图片数据
             this.autoSaveImage();
         }
@@ -79,9 +88,9 @@ class RenderView extends React.Component{
         this.move = { x:0, y:0};
         this.start = { x:0, y:0};
     }
+    // 标记
     drawTag(tag,x,y){
-        let myCanvas = this.refs.myCanvas;
-        let myCtx = myCanvas.getContext('2d');
+        let myCtx = this.init.myCtx;
         let pic_url = '';
         if(tag == "drawRight"){
             pic_url = this.refs.tagRight;
@@ -91,49 +100,99 @@ class RenderView extends React.Component{
             pic_url = this.refs.tagWrong;
         }
         myCtx.drawImage(pic_url,x-35,y-35,75,75);
+        this.recordHistory({
+            actionName: this.init.actionName,
+            img_url: pic_url,
+            x: x-35,
+            y: y-35,
+            width: 75,
+            height: 75
+        })
     }
-    drawRect(){
+    // 画框
+    drawRect(args){
         let {start,move} = this.init;
         let width = Math.abs(move.x-start.x);
         let height = Math.abs(move.y-start.y);
-        let myCanvas = this.refs.myCanvas;
-        let myCtx = myCanvas.getContext('2d');
-        
+        let myCtx = this.init.myCtx;
+        // 清空画布        
         myCtx.clearRect(0,0,this.init.imgInfo.width,this.init.imgInfo.height);
-
+        // 背景
         let bgImage = new Image();
         bgImage.src = this.init.canvasUrl;
         myCtx.drawImage(bgImage,0,0,this.init.imgInfo.width,this.init.imgInfo.height);
-        myCtx.strokeStyle = 'red';
-        myCtx.lineWidth = 5;
+        myCtx.strokeStyle = this.init.canvasConfig.strokeStyle;
+        myCtx.lineWidth = this.init.canvasConfig.lineWidth;
         myCtx.strokeRect(start.x,start.y,width,height);
+        if(args){
+            this.recordHistory({
+                actionName: this.init.actionName,
+                x: start.x,
+                y: start.y,
+                width: width,
+                height: height
+            })
+        }
     }
+    // 写字
     drawText(str){
-        let myCanvas = this.refs.myCanvas;
-        let myCtx = myCanvas.getContext('2d');
+        let myCtx = this.init.myCtx;
         const {inputPosition} = this.state;
-        //console.log(inputPosition)
-        myCtx.fillStyle = "red";
-        myCtx.font = "50px ooxx";
+        myCtx.fillStyle = this.init.canvasConfig.fillStyle;
+        myCtx.font = this.init.canvasConfig.font;
         myCtx.fillText(str,inputPosition.x,inputPosition.y);
         this.setState({
-            inputStatus:false
+            inputStatus: false
+        })
+        this.recordHistory({
+            actionName: this.init.actionName,
+            x: inputPosition.x,
+            y: inputPosition.y,
+            text: str
         })
     }
     // 重新绘制
-    drawHistory(myCtx){
-        let data = this.props.history;
+    drawHistory(){
+        let drawList = this.init.historyList;
+        drawList.pop();
+        let revokeList = drawList;
+
+        let myCtx = this.init.myCtx;
+        // 清空画布        
+        myCtx.clearRect(0,0,this.init.imgInfo.width,this.init.imgInfo.height);
+        // 背景
+        let bgImage = new Image();
+        bgImage.src = this.props.url;
+        let that = this;
+        bgImage.onload = function(){
+            myCtx.drawImage(bgImage,0,0,that.init.imgInfo.width,that.init.imgInfo.height);
+            revokeList.map(function(item,index){
+                const {actionName,x,y} = item;
+                if(actionName == "drawRight"||actionName == "drawHalfRight"||actionName == "drawWrong"){
+                    myCtx.drawImage(item.img_url,x,y,item.width,item.width);
+                }else if(actionName == "drawRect"){
+                    myCtx.strokeRect(x,y,item.width,item.height);
+                }else if(actionName == "drawText"){
+                    myCtx.fillText(item.text,x,y);
+                }
+            });
+        }
+        this.init.historyList = revokeList;
     }
     // 清空
     clearHistory(){
         let myCanvas = this.refs.myCanvas;
         let myCtx = myCanvas.getContext('2d');
-        myCtx.clearRect(0, 0, this.init.imgInfo.width, this.init.imgInfo.height);
 
         let bgImage = new Image();
         bgImage.src = this.props.url;
-        myCtx.drawImage(bgImage,0,0,this.init.imgInfo.width,this.init.imgInfo.height);
+        let that = this;
+        bgImage.onload = function(){
+            myCtx.drawImage(bgImage,0,0,that.init.imgInfo.width,that.init.imgInfo.height);
+        }
+        this.init.historyList = [];
     }
+    // 计算页面点击位置
     getPosition(event){
         let target = event.target;
         // 视窗偏移量
@@ -157,9 +216,7 @@ class RenderView extends React.Component{
         // console.log({x:canvasPointX,y:canvasPointY});
         return {x:canvasPointX,y:canvasPointY}
     }
-    /**
-     * 获取canvas坐标系中的点击位置
-     */
+    // 计算canvas位置
     getCanvasPoint(event){
         let target = event.target;
         // 视窗偏移量
@@ -183,6 +240,11 @@ class RenderView extends React.Component{
         //console.log({x:canvasPointX,y:canvasPointY});
         return {x:canvasPointX,y:canvasPointY}
     }
+    // 记录历史
+    recordHistory(obj){
+        this.init.historyList.push(obj);
+    }
+    // 自动保存
     autoSaveImage(){
         let canvas = this.refs.myCanvas;
         let currentImg = canvas.toDataURL("image/png");
@@ -197,7 +259,7 @@ class RenderView extends React.Component{
             this.clearHistory();
         }else if(nextProps.actionName == "revoke"){
             console.log("撤销");
-            // this.drawHistory();
+            this.drawHistory();
         }
         // console.log(nextProps)
         this.init.drawStatus = nextProps.drawStatus;
@@ -209,13 +271,19 @@ class RenderView extends React.Component{
     }
 	componentDidMount(){
         let that = this;
-        // 获取基本信息
-        const {url} = this.props;
+        // 获取canvas
         let myCanvas = ReactDOM.findDOMNode(this.refs.myCanvas);
         let myCtx = myCanvas.getContext('2d');
+        myCtx.save();
+        myCtx.fillStyle = "blue";
+        myCtx.save();
+        this.init.myCanvas = myCanvas;
+        this.init.myCtx = myCtx;
+
         // 绘制底图
         let bgImage = new Image();
-        bgImage.src = url;
+        bgImage.src = this.props.url;
+        // console.dir(bgImage)
         bgImage.crossOrigin = "Anonymous";
         bgImage.onload = function(){
             that.init.imgInfo = {
@@ -224,7 +292,7 @@ class RenderView extends React.Component{
             }
             myCanvas.setAttribute('height',this.height);
             myCanvas.setAttribute('width',this.width);
-            myCtx.drawImage(bgImage,0,0,this.width,this.height);
+            myCtx.drawImage(this,0,0,this.width,this.height);
         }
         ReactDOM.findDOMNode(this.refs.myInput).addEventListener('keydown',(e)=>{
             let theEvent = e || window.event;
