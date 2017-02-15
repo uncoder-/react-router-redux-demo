@@ -25,9 +25,9 @@ class CanvasView extends React.Component {
     }
     finishDraw(args){
         this.init = {
-            historyDraw:[],
-            canvasUrl:''
+            canvasUrl:args
         }
+        // console.log(args);
     }
     render() {
         // console.log(this.state)

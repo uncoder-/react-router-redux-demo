@@ -252,6 +252,7 @@ class RenderView extends React.Component{
         this.props.onFinishDraw({
             canvasUrl:currentImg
         });
+        this.props.onFinishDraw(currentImg);
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.actionName == "reset"){
