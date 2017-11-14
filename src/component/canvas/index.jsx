@@ -34,12 +34,19 @@ class CanvasView extends React.Component {
         return (
             <div className="canvas-container">
                 <RenderView
-                    url = {this.state.url}
-                    actionName = {this.state.actionName}
-                    drawStatus = {this.state.drawStatus == 0?false:true}
+                    key = {markId}
+                    markId = {markId}
+                    currentUrl = {currentUrl}
+                    originUrl = {originUrl}
+                    actionName = {actionName}
+                    drawStatus = {drawStatus == 0?false:true}
                     onFinishDraw = {e=>this.finishDraw(e)}
                 />
-                <ControlPanel onClick={e=>this.checkStatus(e)} />
+                <ControlPanel
+                    unable={unable}
+                    markId={markId}
+                    onClick={e => this.checkStatus(e)}
+                />
             </div>
         )
     }
